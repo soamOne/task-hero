@@ -10,9 +10,36 @@ MongoClient.connect(connectionURL, {useUnifiedTopology: true }, (error, client) 
     }
     
     const db= client.db(dbName)
-    db.collection('users').insertOne({
-        name:'Aditi',
-        age:'21'
+    db.collection('users').insertMany ([ 
+        {
+            name:'Howard',
+            age:'28'
+        },{
+            name:'Derek',
+            age:'34'
+        }
+            
+    ], (error, result) =>{
+        if(error){
+            console.log('Error while inserting users.')
+        }
+        console.log(result.ops)
     })
+    
+    db.collection('tasks').insertMany([
+        {
+            descrption:'buy groceries',
+            status:'done'
+        },
+        {
+            descrption:'go to the dentist',
+            status:'pending'
 
-})
+        }
+    ], (error, result) =>{
+        if(error){
+            console.log('Error while inserting tasks.')
+        }
+        console.log(result.ops)
+    })
+}) 
